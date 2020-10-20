@@ -68,7 +68,7 @@
 			}
 			$scope.method = methods[0];
 			$scope.addServer($scope.server.url,$scope.methods);
-		},null);
+		});
 	}
 	$scope._execRequest = function(url,method,params,successcb,errorcb) {
 		$scope.status = {'status':'info','msg':'Sending request ...'};
@@ -82,7 +82,7 @@
 				$scope.$apply(function(){
 					document.getElementById('outputobj').innerHTML = '';
 					Object.inspectInto(response[0], 'outputobj', 'Response object');
-					if(successcb !== undefined){
+					if(Object.isFunction(successcb)){
 						successcb(response, status, jqXHR);				
 					}
 					$scope.responsexml = prettify(jqXHR.responseText).replace(/\t/g,'  ');
@@ -94,7 +94,7 @@
 				$scope.$apply(function(){
 					document.getElementById('outputobj').innerHTML = '';
 					document.getElementById('outputobj').innerHTML = '';
-					if(errorcb !== undefined) {
+					if(Object.isFunction(errorcb)) {
 						errorcb(jqXHR, status, error);
 					}
 					$scope.responsexml = prettify(jqXHR.responseText).replace(/\t/g,'  ');
